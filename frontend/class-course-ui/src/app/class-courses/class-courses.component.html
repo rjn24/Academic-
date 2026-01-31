@@ -1,0 +1,168 @@
+<div class="container">
+
+  <!-- ================= CLASSES ================= -->
+  <h2>Classes</h2>
+
+  <!-- show/hide classes table -->
+  <button (click)="toggleClasses()">
+    {{ showClasses ? 'Hide' : 'Show' }} Classes
+  </button>
+
+  <button (click)="loadClasses()">Refresh Classes</button>
+
+  <hr>
+
+  @if (showClasses) {
+
+    <!-- ---- Add / Edit Class Form ---- -->
+    <h3>{{ editingClass ? 'Edit Class' : 'Add New Class' }}</h3>
+
+    <input placeholder="Class ID" [(ngModel)]="classModel.classID">
+    <input placeholder="Program" [(ngModel)]="classModel.program">
+    <input placeholder="Year" [(ngModel)]="classModel.year">
+    <input placeholder="Section" [(ngModel)]="classModel.section">
+    <input placeholder="Semester" [(ngModel)]="classModel.semester">
+
+    <button (click)="saveClass()">
+      {{ editingClass ? 'Update' : 'Add' }} Class
+    </button>
+
+    @if (editingClass) {
+      <button (click)="resetClass()">Cancel</button>
+    }
+
+    <br><br>
+
+    <!-- ---- Classes Table ---- -->
+    <table border="1" cellpadding="6">
+      <tr>
+        <th>Class ID</th>
+        <th>Program</th>
+        <th>Year</th>
+        <th>Section</th>
+        <th>Semester</th>
+        <th>Actions</th>
+      </tr>
+
+      @for (c of classes; track c.classID) {
+        <tr>
+          <td>{{ c.classID }}</td>
+          <td>{{ c.program }}</td>
+          <td>{{ c.year }}</td>
+          <td>{{ c.section }}</td>
+          <td>{{ c.semester }}</td>
+          <td>
+            <!-- Edit fills the form -->
+            <button (click)="editClass(c)">Edit</button>
+
+            <!-- Delete removes row -->
+            <button (click)="deleteClass(c.classID)">Delete</button>
+          </td>
+        </tr>
+      }
+    </table>
+  }
+
+  <br><br>
+
+  <!-- ================= COURSES ================= -->
+  <h2>Courses</h2>
+
+  <button (click)="toggleCourses()">
+    {{ showCourses ? 'Hide' : 'Show' }} Courses
+  </button>
+
+  <button (click)="loadCourses()">Refresh Courses</button>
+
+  <hr>
+
+  @if (showCourses) {
+
+    <!-- ---- Add / Edit Course Form ---- -->
+    <h3>{{ editingCourse ? 'Edit Course' : 'Add New Course' }}</h3>
+
+    <input placeholder="Course Code" [(ngModel)]="courseModel.courseCode">
+    <input placeholder="Subject" [(ngModel)]="courseModel.subjectName">
+    <input placeholder="Semester" [(ngModel)]="courseModel.semester">
+    <input placeholder="Credits" [(ngModel)]="courseModel.credits">
+
+    <button (click)="saveCourse()">
+      {{ editingCourse ? 'Update' : 'Add' }} Course
+    </button>
+
+    @if (editingCourse) {
+      <button (click)="resetCourse()">Cancel</button>
+    }
+
+    <br><br>
+
+    <!-- ---- Courses Table ---- -->
+    <table border="1" cellpadding="6">
+      <tr>
+        <th>Course Code</th>
+        <th>Subject</th>
+        <th>Semester</th>
+        <th>Credits</th>
+        <th>Actions</th>
+      </tr>
+
+      @for (c of courses; track c.courseCode) {
+        <tr>
+          <td>{{ c.courseCode }}</td>
+          <td>{{ c.subjectName }}</td>
+          <td>{{ c.semester }}</td>
+          <td>{{ c.credits }}</td>
+          <td>
+            <button (click)="editCourse(c)">Edit</button>
+            <button (click)="deleteCourse(c.courseCode)">Delete</button>
+          </td>
+        </tr>
+      }
+    </table>
+  }
+
+  <br><br>
+
+  <!-- ================= JOINED (READ ONLY) ================= -->
+  <h2>Class + Course (Joined View)</h2>
+
+  <button (click)="toggleJoined()">
+    {{ showJoined ? 'Hide' : 'Show' }} Joined Table
+  </button>
+
+  <hr>
+
+  @if (showJoined) {
+    <table border="1" cellpadding="6">
+      <tr>
+        <th>Class ID</th>
+        <th>Program</th>
+        <th>Year</th>
+        <th>Section</th>
+        <th>Semester</th>
+        <th>Course Code</th>
+        <th>Subject</th>
+        <th>Credits</th>
+      </tr>
+
+      <!-- client-side join by matching semester -->
+      @for (cls of classes; track cls.classID) {
+        @for (crs of courses; track crs.courseCode) {
+          @if (cls.semester === crs.semester) {
+            <tr>
+              <td>{{ cls.classID }}</td>
+              <td>{{ cls.program }}</td>
+              <td>{{ cls.year }}</td>
+              <td>{{ cls.section }}</td>
+              <td>{{ cls.semester }}</td>
+              <td>{{ crs.courseCode }}</td>
+              <td>{{ crs.subjectName }}</td>
+              <td>{{ crs.credits }}</td>
+            </tr>
+          }
+        }
+      }
+    </table>
+  }
+
+</div>

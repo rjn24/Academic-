@@ -1,0 +1,25 @@
+
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <tr>
+    <th>Class ID</th>
+    <th>Program</th>
+    <th>Year</th>
+    <th>Section</th>
+    <th>Semester</th>
+    <th>Course Code</th>
+    <th>Subject</th>
+    <th>Credits</th>
+  </tr>
+
+  <tr *ngFor="let item of classCourses">
+    <td>{{item.classID}}</td>
+    <td>{{item.program}}</td>
+    <td>{{item.year}}</td>
+    <td>{{item.section}}</td>
+    <td>{{item.semester}}</td>
+    <td>{{item.courseCode}}</td>
+    <td>{{item.subjectName}}</td>
+    <td>{{item.credits}}</td>
+  </tr>
+</table>
